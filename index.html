@@ -1,4 +1,183 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscador de Emisoras por País y Ciudad</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 30px; background: #f9f9f9; }
+        h1 { color: #2d3e50; }
+        .buscador {
+            margin-bottom: 30px;
+            padding: 8px 12px;
+            width: 100%;
+            max-width: 500px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .pais { margin-top: 30px; background: #fff; padding: 18px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);}
+        .nombre-pais { font-size: 1.3em; color: #17507c; margin-bottom: 10px; display: block;}
+        .ciudad { margin-left: 25px; margin-top: 15px;}
+        .nombre-ciudad { font-size: 1.1em; color: #2c5e2c; margin-bottom: 3px; display: block;}
+        .emisora { margin-left: 30px; }
+        .emisora a { color: #333; text-decoration: none; }
+        .emisora a:hover { text-decoration: underline; color: #17507c; }
+        .no-resultados {
+            margin-top: 30px;
+            color: #be3e26;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Buscador de Emisoras por País y Ciudad</h1>
+    <input type="text" id="inputBuscador" class="buscador" placeholder="Buscar país, ciudad o emisora..." onkeyup="filtrarEmisoras()" />
+
+    <div id="emisoras-list">
+        <!-- España -->
+        <div class="pais"><span class="nombre-pais">España</span>
+            <div class="ciudad"><span class="nombre-ciudad">Madrid</span>
+                <div class="emisora"><a href="https://www.los40.com/" target="_blank">Los 40</a></div>
+                <div class="emisora"><a href="https://www.cadenaser.com/" target="_blank">Cadena SER</a></div>
+                <div class="emisora"><a href="https://www.ondacero.es/" target="_blank">Onda Cero</a></div>
+            </div>
+            <div class="ciudad"><span class="nombre-ciudad">Barcelona</span>
+                <div class="emisora"><a href="https://www.rac1.cat/" target="_blank">RAC1</a></div>
+                <div class="emisora"><a href="https://www.catalunyamusica.cat/" target="_blank">Catalunya Música</a></div>
+                <div class="emisora"><a href="https://www.radiomarca.com/" target="_blank">Radio Marca</a></div>
+            </div>
+            <div class="ciudad"><span class="nombre-ciudad">Valencia</span>
+                <div class="emisora"><a href="https://www.ondacero.es/emisoras/comunidad-valenciana/valencia/" target="_blank">Onda Cero Valencia</a></div>
+                <div class="emisora"><a href="https://www.radiovalencia.es/" target="_blank">Radio Valencia</a></div>
+            </div>
+        </div>
+        <!-- México -->
+        <div class="pais"><span class="nombre-pais">México</span>
+            <div class="ciudad"><span class="nombre-ciudad">Ciudad de México</span>
+                <div class="emisora"><a href="https://www.los40.com.mx/" target="_blank">Los 40 México</a></div>
+                <div class="emisora"><a href="https://www.radioformula.com.mx/" target="_blank">Radio Fórmula</a></div>
+                <div class="emisora"><a href="https://www.exafm.com/cdmx/" target="_blank">Exa FM CDMX</a></div>
+            </div>
+            <div class="ciudad"><span class="nombre-ciudad">Guadalajara</span>
+                <div class="emisora"><a href="https://www.estacionpanda.com/" target="_blank">Estación Panda</a></div>
+                <div class="emisora"><a href="https://www.los40.com.mx/guadalajara/" target="_blank">Los 40 Guadalajara</a></div>
+            </div>
+            <div class="ciudad"><span class="nombre-ciudad">Monterrey</span>
+                <div class="emisora"><a href="https://www.d99radio.com/" target="_blank">D99 Radio Monterrey</a></div>
+                <div class="emisora"><a href="https://www.alfaradio.mx/" target="_blank">Alfa Radio Monterrey</a></div>
+            </div>
+        </div>
+        <!-- Argentina -->
+        <div class="pais"><span class="nombre-pais">Argentina</span>
+            <div class="ciudad"><span class="nombre-ciudad">Buenos Aires</span>
+                <div class="emisora"><a href="https://www.laradioenlinea.com.ar/" target="_blank">La Radio en Línea</a></div>
+                <div class="emisora"><a href="https://www.metro951.com/" target="_blank">Metro 95.1</a></div>
+                <div class="emisora"><a href="https://www.fmrockandpop.com/" target="_blank">FM Rock & Pop</a></div>
+            </div>
+            <div class="ciudad"><span class="nombre-ciudad">Córdoba</span>
+                <div class="emisora"><a href="https://www.radio-sucesos.com/" target="_blank">Radio Sucesos</a></div>
+                <div class="emisora"><a href="https://www.cadena3.com/" target="_blank">Cadena 3 Argentina</a></div>
+            </div>
+        </div>
+        <!-- Nigeria -->
+        <div class="pais"><span class="nombre-pais">Nigeria</span>
+            <div class="ciudad"><span class="nombre-ciudad">Lagos</span>
+                <div class="emisora"><a href="https://www.coolfm.ng/lagos/" target="_blank">Cool FM Lagos</a></div>
+                <div class="emisora"><a href="https://classic97.net/" target="_blank">Classic FM</a></div>
+                <div class="emisora"><a href="https://www.soundcity.tv/" target="_blank">Soundcity Radio</a></div>
+            </div>
+            <div class="ciudad"><span class="nombre-ciudad">Abuja</span>
+                <div class="emisora"><a href="https://www.wazobiafm.com/" target="_blank">Wazobia FM Abuja</a></div>
+                <div class="emisora"><a href="https://www.nigeriainfo.fm/abuja" target="_blank">Nigeria Info Abuja</a></div>
+            </div>
+        </div>
+        <!-- Egipto -->
+        <div class="pais"><span class="nombre-pais">Egipto</span>
+            <div class="ciudad"><span class="nombre-ciudad">El Cairo</span>
+                <div class="emisora"><a href="https://www.nileradioproductions.net/nrj/" target="_blank">NRJ Egypt</a></div>
+                <div class="emisora"><a href="https://www.nileradioproductions.net/nogoumfm/" target="_blank">Nogoum FM</a></div>
+            </div>
+        </div>
+        <!-- Japón -->
+        <div class="pais"><span class="nombre-pais">Japón</span>
+            <div class="ciudad"><span class="nombre-ciudad">Tokio</span>
+                <div class="emisora"><a href="https://radiko.jp/" target="_blank">Radiko (varias emisoras)</a></div>
+                <div class="emisora"><a href="https://www.nhk.or.jp/radio/" target="_blank">NHK Radio</a></div>
+            </div>
+            <div class="ciudad"><span class="nombre-ciudad">Osaka</span>
+                <div class="emisora"><a href="https://www.fmosaka.net/" target="_blank">FM Osaka</a></div>
+            </div>
+        </div>
+        <!-- China -->
+        <div class="pais"><span class="nombre-pais">China</span>
+            <div class="ciudad"><span class="nombre-ciudad">Pekín</span>
+                <div class="emisora"><a href="http://www.cri.cn/" target="_blank">China Radio International</a></div>
+            </div>
+            <div class="ciudad"><span class="nombre-ciudad">Shanghái</span>
+                <div class="emisora"><a href="http://www.smgbb.cn/" target="_blank">Shanghai Media Group</a></div>
+            </div>
+        </div>
+        <!-- Tailandia -->
+        <div class="pais"><span class="nombre-pais">Tailandia</span>
+            <div class="ciudad"><span class="nombre-ciudad">Bangkok</span>
+                <div class="emisora"><a href="https://www.coolfahrenheit.net/" target="_blank">Cool Fahrenheit</a></div>
+                <div class="emisora"><a href="https://www.eazyfm.com/" target="_blank">Eazy FM 105.5</a></div>
+            </div>
+        </div>
+        <!-- Corea del Sur -->
+        <div class="pais"><span class="nombre-pais">Corea del Sur</span>
+            <div class="ciudad"><span class="nombre-ciudad">Seúl</span>
+                <div class="emisora"><a href="http://world.kbs.co.kr/service/index.htm?lang=s" target="_blank">KBS World Radio</a></div>
+                <div class="emisora"><a href="https://www.tbs.seoul.kr/" target="_blank">TBS eFM</a></div>
+            </div>
+        </div>
+        <!-- Puedes agregar más países, ciudades y emisoras siguiendo el mismo formato -->
+    </div>
+    <div id="noResultados" class="no-resultados">No se encontraron resultados.</div>
+
+    <script>
+    function filtrarEmisoras() {
+        let input = document.getElementById('inputBuscador').value.toLowerCase();
+        let paises = document.querySelectorAll('.pais');
+        let noResultados = document.getElementById('noResultados');
+        let hayResultados = false;
+
+        paises.forEach(pais => {
+            let nombrePais = pais.querySelector('.nombre-pais').textContent.toLowerCase();
+            let ciudades = pais.querySelectorAll('.ciudad');
+            let paisVisible = false;
+
+            ciudades.forEach(ciudad => {
+                let nombreCiudad = ciudad.querySelector('.nombre-ciudad').textContent.toLowerCase();
+                let emisoras = ciudad.querySelectorAll('.emisora');
+                let ciudadVisible = false;
+
+                emisoras.forEach(emisora => {
+                    let nombreEmisora = emisora.textContent.toLowerCase();
+                    if (
+                        nombrePais.includes(input) ||
+                        nombreCiudad.includes(input) ||
+                        nombreEmisora.includes(input) ||
+                        input === ""
+                    ) {
+                        emisora.style.display = '';
+                        ciudadVisible = true;
+                    } else {
+                        emisora.style.display = 'none';
+                    }
+                });
+                ciudad.style.display = ciudadVisible ? '' : 'none';
+                if (ciudadVisible) paisVisible = true;
+            });
+            pais.style.display = paisVisible ? '' : 'none';
+            if (paisVisible) hayResultados = true;
+        });
+        noResultados.style.display = hayResultados ? 'none' : '';
+    }
+    </script>
+</body>
+</html>
 <html lang="es">
 
 <head>
