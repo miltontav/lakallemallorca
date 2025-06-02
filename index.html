@@ -1,611 +1,118 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Buscador de Emisoras por País y Ciudad</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 30px; background: #f9f9f9; }
-        h1 { color: #2d3e50; }
-        .buscador {
-            margin-bottom: 30px;
-            padding: 8px 12px;
-            width: 100%;
-            max-width: 500px;
-            font-size: 1em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .pais { margin-top: 30px; background: #fff; padding: 18px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);}
-        .nombre-pais { font-size: 1.3em; color: #17507c; margin-bottom: 10px; display: block;}
-        .ciudad { margin-left: 25px; margin-top: 15px;}
-        .nombre-ciudad { font-size: 1.1em; color: #2c5e2c; margin-bottom: 3px; display: block;}
-        .emisora { margin-left: 30px; }
-        .emisora a { color: #333; text-decoration: none; }
-        .emisora a:hover { text-decoration: underline; color: #17507c; }
-        .no-resultados {
-            margin-top: 30px;
-            color: #be3e26;
-            font-weight: bold;
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <h1>Buscador de Emisoras por País y Ciudad</h1>
-    <input type="text" id="inputBuscador" class="buscador" placeholder="Buscar país, ciudad o emisora..." onkeyup="filtrarEmisoras()" />
-
-    <div id="emisoras-list">
-        <!-- España -->
-        <div class="pais"><span class="nombre-pais">España</span>
-            <div class="ciudad"><span class="nombre-ciudad">Madrid</span>
-                <div class="emisora"><a href="https://www.los40.com/" target="_blank">Los 40</a></div>
-                <div class="emisora"><a href="https://www.cadenaser.com/" target="_blank">Cadena SER</a></div>
-                <div class="emisora"><a href="https://www.ondacero.es/" target="_blank">Onda Cero</a></div>
-            </div>
-            <div class="ciudad"><span class="nombre-ciudad">Barcelona</span>
-                <div class="emisora"><a href="https://www.rac1.cat/" target="_blank">RAC1</a></div>
-                <div class="emisora"><a href="https://www.catalunyamusica.cat/" target="_blank">Catalunya Música</a></div>
-                <div class="emisora"><a href="https://www.radiomarca.com/" target="_blank">Radio Marca</a></div>
-            </div>
-            <div class="ciudad"><span class="nombre-ciudad">Valencia</span>
-                <div class="emisora"><a href="https://www.ondacero.es/emisoras/comunidad-valenciana/valencia/" target="_blank">Onda Cero Valencia</a></div>
-                <div class="emisora"><a href="https://www.radiovalencia.es/" target="_blank">Radio Valencia</a></div>
-            </div>
-        </div>
-        <!-- México -->
-        <div class="pais"><span class="nombre-pais">México</span>
-            <div class="ciudad"><span class="nombre-ciudad">Ciudad de México</span>
-                <div class="emisora"><a href="https://www.los40.com.mx/" target="_blank">Los 40 México</a></div>
-                <div class="emisora"><a href="https://www.radioformula.com.mx/" target="_blank">Radio Fórmula</a></div>
-                <div class="emisora"><a href="https://www.exafm.com/cdmx/" target="_blank">Exa FM CDMX</a></div>
-            </div>
-            <div class="ciudad"><span class="nombre-ciudad">Guadalajara</span>
-                <div class="emisora"><a href="https://www.estacionpanda.com/" target="_blank">Estación Panda</a></div>
-                <div class="emisora"><a href="https://www.los40.com.mx/guadalajara/" target="_blank">Los 40 Guadalajara</a></div>
-            </div>
-            <div class="ciudad"><span class="nombre-ciudad">Monterrey</span>
-                <div class="emisora"><a href="https://www.d99radio.com/" target="_blank">D99 Radio Monterrey</a></div>
-                <div class="emisora"><a href="https://www.alfaradio.mx/" target="_blank">Alfa Radio Monterrey</a></div>
-            </div>
-        </div>
-        <!-- Argentina -->
-        <div class="pais"><span class="nombre-pais">Argentina</span>
-            <div class="ciudad"><span class="nombre-ciudad">Buenos Aires</span>
-                <div class="emisora"><a href="https://www.laradioenlinea.com.ar/" target="_blank">La Radio en Línea</a></div>
-                <div class="emisora"><a href="https://www.metro951.com/" target="_blank">Metro 95.1</a></div>
-                <div class="emisora"><a href="https://www.fmrockandpop.com/" target="_blank">FM Rock & Pop</a></div>
-            </div>
-            <div class="ciudad"><span class="nombre-ciudad">Córdoba</span>
-                <div class="emisora"><a href="https://www.radio-sucesos.com/" target="_blank">Radio Sucesos</a></div>
-                <div class="emisora"><a href="https://www.cadena3.com/" target="_blank">Cadena 3 Argentina</a></div>
-            </div>
-        </div>
-        <!-- Nigeria -->
-        <div class="pais"><span class="nombre-pais">Nigeria</span>
-            <div class="ciudad"><span class="nombre-ciudad">Lagos</span>
-                <div class="emisora"><a href="https://www.coolfm.ng/lagos/" target="_blank">Cool FM Lagos</a></div>
-                <div class="emisora"><a href="https://classic97.net/" target="_blank">Classic FM</a></div>
-                <div class="emisora"><a href="https://www.soundcity.tv/" target="_blank">Soundcity Radio</a></div>
-            </div>
-            <div class="ciudad"><span class="nombre-ciudad">Abuja</span>
-                <div class="emisora"><a href="https://www.wazobiafm.com/" target="_blank">Wazobia FM Abuja</a></div>
-                <div class="emisora"><a href="https://www.nigeriainfo.fm/abuja" target="_blank">Nigeria Info Abuja</a></div>
-            </div>
-        </div>
-        <!-- Egipto -->
-        <div class="pais"><span class="nombre-pais">Egipto</span>
-            <div class="ciudad"><span class="nombre-ciudad">El Cairo</span>
-                <div class="emisora"><a href="https://www.nileradioproductions.net/nrj/" target="_blank">NRJ Egypt</a></div>
-                <div class="emisora"><a href="https://www.nileradioproductions.net/nogoumfm/" target="_blank">Nogoum FM</a></div>
-            </div>
-        </div>
-        <!-- Japón -->
-        <div class="pais"><span class="nombre-pais">Japón</span>
-            <div class="ciudad"><span class="nombre-ciudad">Tokio</span>
-                <div class="emisora"><a href="https://radiko.jp/" target="_blank">Radiko (varias emisoras)</a></div>
-                <div class="emisora"><a href="https://www.nhk.or.jp/radio/" target="_blank">NHK Radio</a></div>
-            </div>
-            <div class="ciudad"><span class="nombre-ciudad">Osaka</span>
-                <div class="emisora"><a href="https://www.fmosaka.net/" target="_blank">FM Osaka</a></div>
-            </div>
-        </div>
-        <!-- China -->
-        <div class="pais"><span class="nombre-pais">China</span>
-            <div class="ciudad"><span class="nombre-ciudad">Pekín</span>
-                <div class="emisora"><a href="http://www.cri.cn/" target="_blank">China Radio International</a></div>
-            </div>
-            <div class="ciudad"><span class="nombre-ciudad">Shanghái</span>
-                <div class="emisora"><a href="http://www.smgbb.cn/" target="_blank">Shanghai Media Group</a></div>
-            </div>
-        </div>
-        <!-- Tailandia -->
-        <div class="pais"><span class="nombre-pais">Tailandia</span>
-            <div class="ciudad"><span class="nombre-ciudad">Bangkok</span>
-                <div class="emisora"><a href="https://www.coolfahrenheit.net/" target="_blank">Cool Fahrenheit</a></div>
-                <div class="emisora"><a href="https://www.eazyfm.com/" target="_blank">Eazy FM 105.5</a></div>
-            </div>
-        </div>
-        <!-- Corea del Sur -->
-        <div class="pais"><span class="nombre-pais">Corea del Sur</span>
-            <div class="ciudad"><span class="nombre-ciudad">Seúl</span>
-                <div class="emisora"><a href="http://world.kbs.co.kr/service/index.htm?lang=s" target="_blank">KBS World Radio</a></div>
-                <div class="emisora"><a href="https://www.tbs.seoul.kr/" target="_blank">TBS eFM</a></div>
-            </div>
-        </div>
-        <!-- Puedes agregar más países, ciudades y emisoras siguiendo el mismo formato -->
-    </div>
-    <div id="noResultados" class="no-resultados">No se encontraron resultados.</div>
-
-    <script>
-    function filtrarEmisoras() {
-        let input = document.getElementById('inputBuscador').value.toLowerCase();
-        let paises = document.querySelectorAll('.pais');
-        let noResultados = document.getElementById('noResultados');
-        let hayResultados = false;
-
-        paises.forEach(pais => {
-            let nombrePais = pais.querySelector('.nombre-pais').textContent.toLowerCase();
-            let ciudades = pais.querySelectorAll('.ciudad');
-            let paisVisible = false;
-
-            ciudades.forEach(ciudad => {
-                let nombreCiudad = ciudad.querySelector('.nombre-ciudad').textContent.toLowerCase();
-                let emisoras = ciudad.querySelectorAll('.emisora');
-                let ciudadVisible = false;
-
-                emisoras.forEach(emisora => {
-                    let nombreEmisora = emisora.textContent.toLowerCase();
-                    if (
-                        nombrePais.includes(input) ||
-                        nombreCiudad.includes(input) ||
-                        nombreEmisora.includes(input) ||
-                        input === ""
-                    ) {
-                        emisora.style.display = '';
-                        ciudadVisible = true;
-                    } else {
-                        emisora.style.display = 'none';
-                    }
-                });
-                ciudad.style.display = ciudadVisible ? '' : 'none';
-                if (ciudadVisible) paisVisible = true;
-            });
-            pais.style.display = paisVisible ? '' : 'none';
-            if (paisVisible) hayResultados = true;
-        });
-        noResultados.style.display = hayResultados ? 'none' : '';
+  <meta charset="UTF-8">
+  <title>La Kalle Mallorca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      color: #222;
     }
-    </script>
-</body>
-</html>
-<html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Kalle Mallorca - Radio Online</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-         :root {
-            --primary-color: #ff4d4d;
-            --secondary-color: #4CAF50;
-        }
-        
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f0f2f5;
-        }
-        
-        .navbar {
-            background: var(--primary-color);
-            padding: 1rem;
-        }
-        
-        .navbar-brand {
-            color: white !important;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .station-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-        
-        .station-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .station-logo {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin: 15px auto;
-        }
-        
-        .player-fixed {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1rem;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-        
-        .now-playing {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
-        }
-        
-        .country-section {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .country-flag {
-            font-size: 2rem;
-            margin-right: 0.5rem;
-        }
-        
-        .featured-stations {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        .station-card {
-            cursor: pointer;
-        }
-        
-        .play-button {
-            opacity: 0.9;
-            transition: opacity 0.3s;
-        }
-        
-        .play-button:hover {
-            opacity: 1;
-        }
-    </style>
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      height: 40px;
+    }
+    .flags {
+      display: flex;
+      gap: 8px;
+    }
+    .flags a {
+      font-size: 1.6rem;
+      text-decoration: none;
+      transition: transform 0.1s;
+    }
+    .flags a:hover {
+      transform: scale(1.15);
+    }
+    .emisoras-bar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 0 0 0;
+      background: #fff;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #eee;
+    }
+    .emisoras-bar a img {
+      height: 32px;
+      transition: filter 0.2s, transform 0.15s;
+      filter: grayscale(30%);
+      border-radius: 6px;
+    }
+    .emisoras-bar a img:hover {
+      filter: none;
+      transform: scale(1.08);
+    }
+    .contenido {
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .emisoras-bar {
+        gap: 10px;
+        padding-top: 8px;
+      }
+      .logo {
+        height: 34px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-broadcast-tower"></i> La Kalle Mallorca
-            </a>
-        </div>
+  <!-- HEADER COMPACTO -->
+  <header>
+    <img src="logo.png" alt="La Kalle Mallorca" class="logo">
+    <nav class="flags">
+      <a href="/es" title="Español">🇪🇸</a>
+      <a href="/en" title="English">🇬🇧</a>
+      <a href="/de" title="Deutsch">🇩🇪</a>
+      <a href="/fr" title="Français">🇫🇷</a>
+      <a href="/it" title="Italiano">🇮🇹</a>
     </nav>
+  </header>
 
-    <div class="container">
-        <div class="featured-stations mb-4">
-            <h2 class="text-center mb-4">Emisoras Destacadas</h2>
-            <div id="featuredStations" class="row"></div>
-        </div>
+  <!-- EMISORAS -->
+  <div class="emisoras-bar">
+    <a href="https://emisora1.com" target="_blank" title="Emisora 1">
+      <img src="emisora1.png" alt="Emisora 1">
+    </a>
+    <a href="https://emisora2.com" target="_blank" title="Emisora 2">
+      <img src="emisora2.png" alt="Emisora 2">
+    </a>
+    <a href="https://emisora3.com" target="_blank" title="Emisora 3">
+      <img src="emisora3.png" alt="Emisora 3">
+    </a>
+    <!-- Agrega más emisoras aquí -->
+  </div>
 
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Filtros</h5>
-                        <select id="countryFilter" class="form-select mb-3">
-                            <option value="">Todos los países</option>
-                            <!-- Países se cargarán dinámicamente -->
-                        </select>
-                        <select id="genreFilter" class="form-select">
-                            <option value="">Todos los géneros</option>
-                            <option value="latin">Latino</option>
-                            <option value="salsa">Salsa</option>
-                            <option value="merengue">Merengue</option>
-                            <option value="reggaeton">Reggaeton</option>
-                            <option value="bachata">Bachata</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-9">
-                <div id="stationsContainer"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="player-fixed">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <span id="nowPlaying" class="now-playing">
-                        <i class="fas fa-music"></i> Selecciona una emisora
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <audio id="audioPlayer" controls class="w-100">
-                        Tu navegador no soporta el elemento audio.
-                    </audio>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_BASE_URL = 'https://de1.api.radio-browser.info/json';
-        const COUNTRIES = {
-            'ES': {
-                name: 'España',
-                flag: '🇪🇸'
-            },
-            'AR': {
-                name: 'Argentina',
-                flag: '🇦🇷'
-            },
-            'CO': {
-                name: 'Colombia',
-                flag: '🇨🇴'
-            },
-            'MX': {
-                name: 'México',
-                flag: '🇲🇽'
-            },
-            'PE': {
-                name: 'Perú',
-                flag: '🇵🇪'
-            },
-            'DO': {
-                name: 'República Dominicana',
-                flag: '🇩🇴'
-            },
-            'CU': {
-                name: 'Cuba',
-                flag: '🇨🇺'
-            },
-            'PR': {
-                name: 'Puerto Rico',
-                flag: '🇵🇷'
-            }
-        };
-
-        let currentAudio = null;
-        let allStations = [];
-
-        async function fetchStations(country) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/stations/bycountrycodeexact/${country}`);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                return data.filter(station => station.url_resolved && station.name);
-            } catch (error) {
-                console.error(`Error fetching stations for ${country}:`, error);
-                return [];
-            }
-        }
-
-        async function loadAllStations() {
-            showLoading(true);
-            try {
-                const promises = Object.keys(COUNTRIES).map(country => fetchStations(country));
-                const results = await Promise.all(promises);
-                allStations = results.flat();
-
-                if (allStations.length === 0) {
-                    throw new Error('No se encontraron emisoras');
-                }
-
-                displayFeaturedStations();
-                displayStationsByCountry();
-                initializeFilters();
-            } catch (error) {
-                showError('Error al cargar las emisoras: ' + error.message);
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        function displayFeaturedStations() {
-            const featured = allStations
-                .sort((a, b) => (b.clickcount || 0) - (a.clickcount || 0))
-                .slice(0, 6);
-
-            const container = document.getElementById('featuredStations');
-            container.innerHTML = featured.map(station => createStationCard(station, true)).join('');
-        }
-
-        function displayStationsByCountry() {
-            const container = document.getElementById('stationsContainer');
-            container.innerHTML = '';
-
-            Object.keys(COUNTRIES).forEach(country => {
-                const countryStations = allStations.filter(s => s.countrycode === country);
-                if (countryStations.length > 0) {
-                    const section = document.createElement('div');
-                    section.className = 'country-section mb-4';
-                    section.innerHTML = `
-                        <h3 class="mb-4">
-                            ${COUNTRIES[country].flag} ${COUNTRIES[country].name}
-                            <small class="text-muted">(${countryStations.length} emisoras)</small>
-                        </h3>
-                        <div class="row">
-                            ${countryStations.map(station => createStationCard(station)).join('')}
-                        </div>
-                    `;
-                    container.appendChild(section);
-                }
-            });
-        }
-
-        function createStationCard(station, isFeatured = false) {
-            const defaultImage = 'https://cdn-icons-png.flaticon.com/512/2404/2404779.png';
-            const cardClass = isFeatured ? 'col-md-4' : 'col-md-6';
-
-            return `
-                <div class="${cardClass} mb-4">
-                    <div class="station-card h-100" onclick="playStation('${escapeHtml(station.url_resolved)}', '${escapeHtml(station.name)}')">
-                        <div class="d-flex align-items-center p-3">
-                            <img src="${station.favicon || defaultImage}"
-                                 alt="${escapeHtml(station.name)}"
-                                 class="station-logo"
-                                 onerror="this.src='${defaultImage}'"
-                                 loading="lazy">
-                            <div class="ms-3">
-                                <h5 class="mb-1">${escapeHtml(station.name)}</h5>
-                                <p class="text-muted mb-2 small">
-                                    ${COUNTRIES[station.countrycode]?.flag || ''}
-                                    ${station.tags || 'Sin género'}
-                                </p>
-                                <button class="btn btn-sm btn-primary play-button">
-                                    <i class="fas fa-play"></i> Reproducir
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function playStation(url, name) {
-            const player = document.getElementById('audioPlayer');
-            const nowPlaying = document.getElementById('nowPlaying');
-
-            try {
-                if (currentAudio === url) {
-                    if (player.paused) {
-                        player.play();
-                    } else {
-                        player.pause();
-                    }
-                    return;
-                }
-
-                player.src = url;
-                player.play();
-                currentAudio = url;
-                nowPlaying.innerHTML = `
-                    <i class="fas fa-broadcast-tower"></i>
-                    Reproduciendo: ${escapeHtml(name)}
-                `;
-            } catch (error) {
-                console.error('Error playing station:', error);
-                nowPlaying.innerHTML = `
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Error al reproducir la emisora
-                `;
-            }
-        }
-
-        function escapeHtml(unsafe) {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        function showLoading(show) {
-            const loadingEl = document.createElement('div');
-            loadingEl.className = 'loading';
-            loadingEl.innerHTML = `
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Cargando...</span>
-                </div>
-                <p class="mt-2">Cargando emisoras...</p>
-            `;
-
-            const container = document.getElementById('stationsContainer');
-            if (show) {
-                container.innerHTML = '';
-                container.appendChild(loadingEl);
-            } else {
-                const existing = container.querySelector('.loading');
-                if (existing) existing.remove();
-            }
-        }
-
-        function showError(message) {
-            const container = document.getElementById('stationsContainer');
-            container.innerHTML = `
-                <div class="alert alert-danger" role="alert">
-                    <i class="fas fa-exclamation-circle"></i> ${message}
-                </div>
-            `;
-        }
-
-        function initializeFilters() {
-            const countryFilter = document.getElementById('countryFilter');
-            const genreFilter = document.getElementById('genreFilter');
-
-            countryFilter.innerHTML = `
-                <option value="">Todos los países</option>
-                ${Object.entries(COUNTRIES)
-                    .map(([code, data]) => `
-                        <option value="${code}">
-                            ${data.flag} ${data.name}
-                        </option>
-                    `).join('')}
-            `;
-
-            [countryFilter, genreFilter].forEach(filter =>
-                filter.addEventListener('change', filterStations)
-            );
-        }
-
-        function filterStations() {
-            const country = document.getElementById('countryFilter').value;
-            const genre = document.getElementById('genreFilter').value.toLowerCase();
-
-            let filtered = allStations;
-
-            if (country) {
-                filtered = filtered.filter(s => s.countrycode === country);
-            }
-
-            if (genre) {
-                filtered = filtered.filter(s =>
-                    s.tags && s.tags.toLowerCase().includes(genre)
-                );
-            }
-
-            const container = document.getElementById('stationsContainer');
-            if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="alert alert-info">
-                        No se encontraron emisoras con los filtros seleccionados
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = `
-                <div class="row">
-                    ${filtered.map(station => createStationCard(station)).join('')}
-                </div>
-            `;
-        }
-
-        // Inicializar la aplicación
-        document.addEventListener('DOMContentLoaded', loadAllStations);
-    </script>
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="contenido">
+    <h1>Bienvenido a La Kalle Mallorca</h1>
+    <p>
+      Escucha las mejores emisoras latinas y urbanas de Mallorca.<br>
+      Elige tu idioma y emisora favorita, ¡y a disfrutar!
+    </p>
+    <!-- Aquí puedes añadir más contenido, widgets de radio, etc -->
+  </div>
 </body>
-
 </html>
